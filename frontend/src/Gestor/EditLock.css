@@ -1,0 +1,81 @@
+/* Estilos generales del contenedor principal */
+.edit-lock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Aseguramos que ocupe toda la altura de la ventana */
+}
+
+/* Capa translúcida de fondo para mejorar la legibilidad */
+.edit-lock-container form {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+}
+
+/* Contenedor del formulario */
+.edit-lock-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #333;
+}
+
+/* Estilos de etiquetas */
+.edit-lock-container label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    text-align: left;
+}
+
+/* Estilos de los inputs */
+.edit-lock-container input,
+.edit-lock-container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilos del botón de envío */
+.submit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Mensajes de error o éxito */
+.error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 480px) {
+    .edit-lock-container form {
+        width: 95%;
+        padding: 15px;
+    }
+}

@@ -1,0 +1,101 @@
+/* Estilos generales */
+.cerraduras-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Estilos para la tabla de cerraduras */
+.cerraduras-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.cerraduras-table th, .cerraduras-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.cerraduras-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.cerraduras-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Estilos para el formulario */
+.cerradura-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.cerradura-form label {
+    font-weight: bold;
+}
+
+.cerradura-form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.cerradura-form button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cerradura-form button:hover {
+    background-color: #218838;
+}
+
+/* Estilos para los botones de acción */
+.button-group {
+    display: flex;
+    gap: 5px;
+}
+
+.edit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}

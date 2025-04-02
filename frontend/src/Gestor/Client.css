@@ -1,0 +1,40 @@
+.client-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    height: 100vh;            /* Asegura que el contenedor ocupe toda la altura de la ventana */
+    flex-direction: column;
+  }
+  
+  .client-container h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .client-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    max-width: 800px;  /* Limita el ancho máximo para una mejor apariencia */
+    margin-top: 20px;
+  }
+  
+  .client-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
+  
+  .client-item p {
+    margin: 5px 0;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+  }
+  
