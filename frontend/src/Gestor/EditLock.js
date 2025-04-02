@@ -52,10 +52,10 @@ const EditLock = () => {
 
   return (
     <>
-      <h2>Editar Cerradura</h2>
     <div className="edit-lock-container">
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
+      <h2>Editar Cerradura</h2>
         <div className="form-group">
           <label htmlFor="nombre">Nombre</label>
           <input 

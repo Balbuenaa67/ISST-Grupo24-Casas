@@ -52,12 +52,13 @@
   color: #ffffff;
   text-decoration: none;
   font-size: 20px;
-  margin: 15px 0;
+  margin: 15px;
   font-weight: bold;
   border: 2px solid #ffffff;
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 30px;
   transition: all 0.3s ease;
+  
 }
 
 .access-link:hover,

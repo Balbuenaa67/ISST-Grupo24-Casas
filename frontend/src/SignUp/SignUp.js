@@ -76,6 +76,7 @@ const SignUp = () => {
   };
 
   return (
+    <div className="page-wrapper">
     <div className="signup-container">
       <h2>Registro</h2>
 
@@ -107,6 +108,7 @@ const SignUp = () => {
         {/* Botón para enviar el formulario */}
         <button type="submit">Registrarse</button>
       </form>
+    </div>
     </div>
   );
 };

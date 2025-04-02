@@ -13,8 +13,12 @@ const HomePage = () => {
       </div>
 
       <div className="access-container">
-        <div className="access-link" onClick={() => navigate('/login')}>
-          🔐 Acceder
+        <div className="access-link" onClick={() => navigate('/Gestor/login')}>
+          🔐 Acceder como Gestor
+        </div>
+        
+        <div className="access-link" onClick={() => navigate('/Cliente/login')}>
+          🔐 Acceder como Cliente
         </div>
 
         <div className="signup-link" onClick={() => navigate('/signup')}>

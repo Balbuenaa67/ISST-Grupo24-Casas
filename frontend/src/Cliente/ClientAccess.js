@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext"; 
 import { useNavigate } from "react-router-dom";
-import './Access.css';
+import './ClientAccess.css';
 
 const Access = () => {
   const { user } = useAuth();

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo24.cerraduras_casas.Model.Cliente;
 import com.grupo24.cerraduras_casas.Model.Gestor;
+import com.grupo24.cerraduras_casas.Service.ClienteService;
 import com.grupo24.cerraduras_casas.Service.GestorService;
 import com.grupo24.cerraduras_casas.Service.JwtUtil;
 
@@ -22,31 +24,59 @@ import com.grupo24.cerraduras_casas.Service.JwtUtil;
 @CrossOrigin(origins = "http://localhost:3000") // Permite llamadas desde React
 public class AuthController {
     @Autowired
-    private GestorService userService;
+    private GestorService gestorService;
+
+    @Autowired
+    private ClienteService clienteService;
 
     @Autowired
     private JwtUtil jwtUtil;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+    @PostMapping("/gestor/login")
+    public ResponseEntity<?> logingestor(@RequestBody Map<String, String> credentials) {
         String email = credentials.get("email");
         String password = credentials.get("password");
 
-        Optional<Gestor> gestorOpt = userService.findByEmail(email);
-        if (gestorOpt.isEmpty() || !userService.verifyPassword(password, gestorOpt.get().getPassword())) {
+        Optional<Gestor> gestorOpt = gestorService.findByEmail(email);
+        if (gestorOpt.isEmpty() || !gestorService.verifyPassword(password, gestorOpt.get().getPassword())) {
             return ResponseEntity.status(401).body(Map.of("message", "Credenciales incorrectas"));
         }
 
         String token = jwtUtil.generateToken(email);
-        // return ResponseEntity.ok(Map.of("token", token, "user", Map.of("email", email)));
         Gestor gestor = gestorOpt.get();
 
         return ResponseEntity.ok(Map.of(
             "token", token,
             "user", Map.of(
                 "email", email,
-                "dni", gestor.getDni())));
+                "dni", gestor.getDni(),
+                "role", "GESTOR") // Agregamos el rol explícitamente
+        ));
     }
+
+
+    @PostMapping("/cliente/login")
+    public ResponseEntity<?> logincliente(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+
+        Optional<Cliente> clienteOpt = clienteService.findByEmail(email);
+        if (clienteOpt.isEmpty() || !clienteService.verifyPassword(password, clienteOpt.get().getPassword())) {
+            return ResponseEntity.status(401).body(Map.of("message", "Credenciales incorrectas"));
+        }
+
+        String token = jwtUtil.generateToken(email);
+        Cliente cliente = clienteOpt.get();
+
+        return ResponseEntity.ok(Map.of(
+            "token", token,
+            "user", Map.of(
+                "email", email,
+                "dni", cliente.getDni(),
+                "role", "CLIENTE") // Agregamos el rol explícitamente
+        ));
+    }
+
 
     @GetMapping("/protected")
     public ResponseEntity<?> protectedRoute(@RequestHeader("Authorization") String authHeader) {

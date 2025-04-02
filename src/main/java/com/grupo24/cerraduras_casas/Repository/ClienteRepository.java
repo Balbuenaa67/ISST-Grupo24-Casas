@@ -11,7 +11,7 @@ public interface ClienteRepository extends CrudRepository<Cliente, String> {
     Optional<Cliente> findByDni(String dni);
     List<Cliente> findByNombre(String nombre);
     List<Cliente> findByApellido(String apellido);
-    List<Cliente> findByEmail(String email);
+    Optional<Cliente> findByEmail(String email);
     List<Cliente> findByTelefono(String telefono);
 }
 

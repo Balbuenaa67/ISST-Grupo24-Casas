@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 
 import HomePage from './SignUp/HomePage';
-import LoginPage from './SignUp/Login';
+import LoginGestor from './SignUp/GestorLogin';
+import LoginCliente from './SignUp/ClienteLogin';
 import RegisterPage from './SignUp/SignUp';
 
 import ManagementPanel from './Gestor/ManagementPanel';
@@ -40,11 +41,12 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/Login" element={<LoginPage />} />
+          <Route path="/Gestor/Login" element={<LoginGestor />} />
+          <Route path="/Cliente/Login" element={<LoginCliente />} />
           <Route path="/SignUp" element={<RegisterPage />} />
 
-          {/* Rutas protegidas */}
-          <Route element={<ProtectedRoute />}>
+          {/* Rutas para gestores */}
+          <Route element={<ProtectedRoute allowedRoles={["GESTOR"]} />}>
             <Route path="/ManagementPanel" element={<ManagementPanel />} />
             <Route path="/ManagementPanel/AddAccess" element={<AddAccess />} />
             <Route path="/ManagementPanel/Access" element={<Access />} />
@@ -53,7 +55,10 @@ function App() {
             <Route path="/ManagementPanel/Lock" element={<Lock />} />
             <Route path="/ManagementPanel/EditLock/:id" element={<EditLock />} />
             <Route path="/ManagementPanel/Clients" element={<Client />} />
+            </Route>
 
+          {/* Rutas para clientes */}
+          <Route element={<ProtectedRoute allowedRoles={["CLIENTE"]} />}>
             <Route path="/HomeUser" element={<HomeUser />} />
             <Route path="/HomeUser/ClientAccess" element={<ClientAccess />} />
             <Route path="/HomeUser/AccessDetails/:id" element={<AccessDetails />} />

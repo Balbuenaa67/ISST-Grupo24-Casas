@@ -54,9 +54,9 @@ const EditAccess = () => {
 
   return (
     <>
-    <h2>Editar Acceso</h2>
     <div className="edit-access-container">
       <form onSubmit={handleSubmit}>
+      <h2>Editar Acceso</h2>
         <label>Fecha Inicio:</label>
         <input type="datetime-local" name="fechainicio" value={access.fechainicio} onChange={handleChange} required />
 

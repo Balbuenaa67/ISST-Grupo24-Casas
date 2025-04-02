@@ -74,12 +74,6 @@ const Access = () => {
                 >
                   Eliminar
                 </button>
-                <button 
-                  className="details-button"
-                  onClick={() => navigate(`/ManagementPanel/AccessDetails/${access.id}`)}
-                >
-                  🔍 Ver Detalles
-                </button>
               </li>
             ))}
           </ul>

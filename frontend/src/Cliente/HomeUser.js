@@ -17,7 +17,9 @@ const HomeUser = ({ nombre }) => {
             Buenas <strong>{nombre}</strong>, ¿quieres acceder a <strong>tus reservas</strong>?
           </p>
             <a href="/HomeUser/ClientAccess">
+            <button className="back-button" onclick={() => navigate(`/HomeUser/ClientAccess`)}>
                   🔑 Ver accesos
+            </button>
             </a>
         </div>
       </div>

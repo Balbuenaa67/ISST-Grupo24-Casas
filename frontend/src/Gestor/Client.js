@@ -28,7 +28,6 @@ const Client = () => {
 
   return (
     <div className="client-container">
-      <h2>Lista de Clientes</h2>
 
       {error && <p className="error-message">{error}</p>}
 
@@ -37,6 +36,7 @@ const Client = () => {
         <p>No hay clientes disponibles.</p>
       ) : (
         <ul className="client-list">
+          <h2>Lista de Clientes</h2>
           {clients.map((client) => (
             <li key={client.dni} className="client-item">
               <p><strong>DNI:</strong> {client.dni}</p>

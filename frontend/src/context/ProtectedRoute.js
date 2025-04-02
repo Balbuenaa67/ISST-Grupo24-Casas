@@ -1,13 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { useAuth } from "./AuthContext";
 
-const ProtectedRoute = () => {
-  const { user, loading } = useContext(AuthContext);
+const ProtectedRoute = ({ allowedRoles = [] }) => {
+  const { user, loading } = useAuth();
 
-  if (loading) return null; // o spinner si prefieres
+  if (loading) return null; // Opcional: un spinner
 
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
+  // Validar si el usuario y el rol están definidos antes de usar `includes`
+  if (!user || !user.role) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return allowedRoles.includes(user.role) ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoute;

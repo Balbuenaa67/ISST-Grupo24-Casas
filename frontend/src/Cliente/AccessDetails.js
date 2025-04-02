@@ -65,7 +65,7 @@ const AccessDetails = () => {
       <p><strong>Fecha Inicio:</strong> {new Date(access.fechainicio).toLocaleString()}</p>
       <p><strong>Fecha Fin:</strong> {new Date(access.fechafin).toLocaleString()}</p>
       <p><strong>Dirección:</strong> {access.direccion}</p>
-      <p><strong>Cliente:</strong> +34 {access.cliente.telefono} - {access.cliente.nombre}</p>
+      <p><strong>Gestor:</strong> +34 {access.gestor.telefono} - {access.gestor.nombre}</p>
       <button className="open-button" onClick={abrirCerradura}>
         🔓 Abrir Cerradura
       </button>

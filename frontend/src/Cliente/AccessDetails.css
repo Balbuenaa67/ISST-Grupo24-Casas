@@ -5,33 +5,40 @@
     max-width: 500px;
     margin: auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+
+  .access-details-container h2{
+    text-align: center;
   }
   
-  .open-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
-  .open-button:hover {
-    background-color: #218838;
-  }
-  
-  .back-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
-  .back-button:hover {
-    background-color: #0056b3;
-  }
-  
+.open-button,
+.back-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.open-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.open-button:hover {
+  background-color: #218838;
+}
+
+.back-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}

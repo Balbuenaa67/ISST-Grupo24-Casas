@@ -1,40 +1,61 @@
 .client-container {
-    padding: 20px;
-    display: flex;
-    justify-content: center;  /* Centra horizontalmente */
-    align-items: center;      /* Centra verticalmente */
-    height: 100vh;            /* Asegura que el contenedor ocupe toda la altura de la ventana */
-    flex-direction: column;
-  }
-  
-  .client-container h2 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .client-list {
-    list-style-type: none;
-    padding: 0;
-    width: 100%;
-    max-width: 800px;  /* Limita el ancho máximo para una mejor apariencia */
-    margin-top: 20px;
-  }
-  
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+              url('../fondos/fondohome.jpg') no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px 0 80px;
+  box-sizing: border-box;
+}
+
+.client-container h2 {
+  text-align: center;
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.client-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 90%;
+  max-width: 700px;
+}
+
+.client-item {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.client-item p {
+  margin: 8px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+@media (max-width: 480px) {
   .client-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
     padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
   }
-  
   .client-item p {
-    margin: 5px 0;
+    font-size: 14px;
   }
-  
-  .error-message {
-    color: red;
-    font-weight: bold;
-    text-align: center;
+  .client-container h2 {
+    font-size: 22px;
   }
-  
+}
