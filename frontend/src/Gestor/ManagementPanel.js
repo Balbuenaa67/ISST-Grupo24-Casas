@@ -33,6 +33,11 @@ const ManagementPanel = () => {
               </a>
             </li>
             <li>
+              <a href="/ManagementPanel/Clients">
+                👥 Clientes
+              </a>
+            </li>
+            <li>
               <a href="/google-calendar">
                 📅 Google Calendar
               </a>

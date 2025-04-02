@@ -11,13 +11,14 @@ import ManagementPanel from './Gestor/ManagementPanel';
 import AddAccess from './Gestor/AddAccess';
 import Access from './Gestor/Access';
 import EditAccess from './Gestor/EditAccess';
-import AccessDetails from './Gestor/AccessDetails';
 import AddLock from './Gestor/AddLock';
 import Lock from './Gestor/Lock';
 import EditLock from './Gestor/EditLock';
 import Client from './Gestor/Client';
 
 import HomeUser from './Cliente/HomeUser';
+import ClientAccess from './Cliente/ClientAccess';
+import AccessDetails from './Cliente/AccessDetails';
 
 import Navbar from './main/Navbar';  
 import Footer from './main/Footer';  
@@ -48,12 +49,14 @@ function App() {
             <Route path="/ManagementPanel/AddAccess" element={<AddAccess />} />
             <Route path="/ManagementPanel/Access" element={<Access />} />
             <Route path="/ManagementPanel/EditAccess/:id" element={<EditAccess />} />
-            <Route path="/ManagementPanel/AccessDetails/:id" element={<AccessDetails />} />
             <Route path="/ManagementPanel/AddLock" element={<AddLock />} />
             <Route path="/ManagementPanel/Lock" element={<Lock />} />
             <Route path="/ManagementPanel/EditLock/:id" element={<EditLock />} />
-            <Route path="/ManagementPanel/Client" element={<Client />} />
+            <Route path="/ManagementPanel/Clients" element={<Client />} />
+
             <Route path="/HomeUser" element={<HomeUser />} />
+            <Route path="/HomeUser/ClientAccess" element={<ClientAccess />} />
+            <Route path="/HomeUser/AccessDetails/:id" element={<AccessDetails />} />
           </Route>
 
         </Routes>

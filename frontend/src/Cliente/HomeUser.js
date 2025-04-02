@@ -16,7 +16,7 @@ const HomeUser = ({ nombre }) => {
           <p>
             Buenas <strong>{nombre}</strong>, ¿quieres acceder a <strong>tus reservas</strong>?
           </p>
-            <a href="/ManagementPanel/Access">
+            <a href="/HomeUser/ClientAccess">
                   🔑 Ver accesos
             </a>
         </div>
