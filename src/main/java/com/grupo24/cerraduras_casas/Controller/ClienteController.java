@@ -7,11 +7,13 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo24.cerraduras_casas.Model.Cliente;
 import com.grupo24.cerraduras_casas.Repository.ClienteRepository;
-import com.grupo24.cerraduras_casas.Service.TokenService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -31,12 +32,14 @@ import com.grupo24.cerraduras_casas.Service.TokenService;
 public class ClienteController {
 
     private final ClienteRepository clienteRepository;
-    private final TokenService tokenService;
     public static final Logger log = LoggerFactory.getLogger(ClienteController.class);
 
-    public ClienteController(ClienteRepository clienteRepository, TokenService tokenService) {
+       @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public ClienteController(ClienteRepository clienteRepository, PasswordEncoder passwordEncoder) {
         this.clienteRepository = clienteRepository;
-        this.tokenService = tokenService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -61,21 +64,28 @@ public class ClienteController {
      */
     @PostMapping
     public ResponseEntity<Cliente> create(@RequestBody Cliente newCliente) throws URISyntaxException {
-        // Comprobamos si ya existe un cliente con el mismo DNI.
-        if (clienteRepository.findById(newCliente.getDni()).isPresent()) {
+        log.info("Intentando crear cliente con DNI: {}", newCliente.getDni());
+
+        if (newCliente.getDni() == null || newCliente.getDni().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (clienteRepository.existsById(newCliente.getDni())) {
+            log.warn("Cliente con DNI {} ya existe", newCliente.getDni());
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-            
-        // Generar el token a partir de la clave
-        String tokenGenerado = tokenService.generateToken(newCliente.getPassword());
-        
-        // Asignar el token al acceso en lugar de la clave original
-        newCliente.setPassword(tokenGenerado);
+
+        // Cifrar la contraseña con BCrypt
+        String encryptedPassword = passwordEncoder.encode(newCliente.getPassword());
+
+        // Asignar la contraseña cifrada al gestor
+        newCliente.setPassword(encryptedPassword);
 
         Cliente result = clienteRepository.save(newCliente);
+        log.info("Cliente creado con éxito: {}", result);
+
         return ResponseEntity.created(new URI("/clientes/" + result.getDni())).body(result);
     }
-
     /**
      * Obtiene un cliente por su DNI.
      * @param dni El DNI del cliente.
