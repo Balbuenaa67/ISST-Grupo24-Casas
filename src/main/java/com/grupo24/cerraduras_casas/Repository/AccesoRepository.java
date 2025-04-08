@@ -13,5 +13,6 @@ public interface AccesoRepository extends CrudRepository<Acceso, Long> {
     List<Acceso> findByCliente(Cliente cliente);
     List<Acceso> findByGestor(Gestor gestor);
     List<Acceso> findByDireccion(String direccion);
+    List<Acceso> findByCerradura(String cerradura);
     Optional<Acceso> findByCerraduraAndClave(String cerradura, String clave);
 }
