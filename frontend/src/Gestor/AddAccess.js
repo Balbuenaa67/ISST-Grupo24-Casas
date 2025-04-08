@@ -7,8 +7,8 @@ const AddAccess = () => {
     const { user } = useAuth();
     const [formData, setFormData] = useState({
         clave: '',
-        fechaInicio: '',
-        fechaFinal: '',
+        fechainicio: '',
+        fechafinal: '',
         direccion: '',
         cerradura: '',
         gestor: { dni: user?.dni || ""  },
@@ -36,23 +36,25 @@ const AddAccess = () => {
         setError(null);
         setSuccessMessage("");
 
+        const parseDateTimeLocal = (value) => new Date(value + ":00");
+
         // Validaciones
         const currentDate = new Date();
-        const fechaInicio = new Date(formData.fechaInicio);
-        const fechaFinal = new Date(formData.fechaFinal);
+        const fechainicio = parseDateTimeLocal(formData.fechainicio);
+        const fechafinal = parseDateTimeLocal(formData.fechafinal);
 
-        console.log('fechaInicio:', formData.fechaInicio);
-        console.log('fechaFinal:', formData.fechaFinal);
+        console.log('fechainicio:', formData.fechainicio);
+        console.log('fechafinal:', formData.fechafinal);
 
 
-        // Validar que fechaInicio sea mayor que la fecha actual
-        if (fechaInicio <= currentDate) {
+        // Validar que fechainicio sea mayor que la fecha actual
+        if (fechainicio <= currentDate) {
             setError("La fecha de inicio debe ser mayor que la fecha actual.");
             return;
         }
 
-        // Validar que fechaFinal sea mayor que fechaInicio
-        if (fechaFinal <= fechaInicio) {
+        // Validar que fechafinal sea mayor que fechainicio
+        if (fechafinal <= fechainicio) {
             setError("La fecha final debe ser mayor que la fecha de inicio.");
             return;
         }
@@ -60,8 +62,8 @@ const AddAccess = () => {
         try {
             const payload = {
                 ...formData,
-                fechaInicio: fechaInicio.toISOString(),
-                fechaFinal: fechaFinal.toISOString()
+                fechainicio: fechainicio.toISOString(),
+                fechafin: fechafinal.toISOString()
             };
     
             const response = await fetch("http://localhost:8080/api/accesos", {
@@ -74,8 +76,8 @@ const AddAccess = () => {
                 setSuccessMessage("Acceso añadido.");
                 setFormData({
                     clave: "",
-                    fechaInicio: "",
-                    fechaFinal: "",
+                    fechainicio: "",
+                    fechafinal: "",
                     direccion: "",
                     cerradura: "",
                     gestor: { dni: user?.dni || ""  },
@@ -107,10 +109,10 @@ const AddAccess = () => {
                         <input type="text" name="clave" value={formData.clave} onChange={handleChange} required />
                         
                         <label>Fecha Inicio:</label>
-                        <input type="datetime-local" name="fechaInicio" value={formData.fechaInicio} onChange={handleChange} required />
+                        <input type="datetime-local" name="fechainicio" value={formData.fechainicio} onChange={handleChange} required />
 
                         <label>Fecha Fin:</label>
-                        <input type="datetime-local" name="fechaFinal" value={formData.fechaFinal} onChange={handleChange} required />
+                        <input type="datetime-local" name="fechafinal" value={formData.fechafinal} onChange={handleChange} required />
 
                         <label>Dirección</label>
                         <input type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
