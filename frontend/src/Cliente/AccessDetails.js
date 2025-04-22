@@ -11,7 +11,7 @@ const AccessDetails = () => {
   useEffect(() => {
     const fetchAccessDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/accesos/${id}`);
+        const response = await fetch(`http://localhost:8080/api/cerraduras/${id}`);
         if (response.ok) {
           const data = await response.json();
           setAccess(data);
@@ -31,13 +31,11 @@ const AccessDetails = () => {
 
     const requestData = {
       clave: access.clave,
-      cerradura: access.cerradura,
-      fechainicio: access.fechainicio,
-      fechafin: access.fechafin,
+      cerradura: access.cerradura
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/abrir-cerradura', {
+      const response = await fetch('http://localhost:8080/api/cerraduras/abrir', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,14 +43,15 @@ const AccessDetails = () => {
         body: JSON.stringify(requestData),
       });
 
-      const result = await response.json();
+      const resultText = await response.text();
+
       if (response.ok) {
-        alert("Cerradura abierta exitosamente");
+        alert(`✅ ${resultText}`);
       } else {
-        alert(`Error: ${result.message}`);
+        alert(`❌ ${resultText}`);
       }
     } catch (error) {
-      alert("Error al conectar con el servidor");
+      alert("❌ Error al conectar con el servidor");
     }
   };
 
@@ -66,6 +65,7 @@ const AccessDetails = () => {
       <p><strong>Fecha Fin:</strong> {new Date(access.fechafin).toLocaleString()}</p>
       <p><strong>Dirección:</strong> {access.direccion}</p>
       <p><strong>Gestor:</strong> +34 {access.gestor.telefono} - {access.gestor.nombre}</p>
+      
       <button className="open-button" onClick={abrirCerradura}>
         🔓 Abrir Cerradura
       </button>
@@ -77,3 +77,5 @@ const AccessDetails = () => {
 };
 
 export default AccessDetails;
+
+// seam_testUDJn_71JiuPCC6ipkn2oSgfb3Vrin

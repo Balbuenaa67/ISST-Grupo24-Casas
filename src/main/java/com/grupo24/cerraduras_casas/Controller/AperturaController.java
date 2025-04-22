@@ -46,7 +46,7 @@ public class AperturaController {
 
         Cerradura cerradura = cerraduraOpt.get();
 
-        // Buscar accesos por cerradura y verificar la clave con tokenService
+        // Buscar accesos por cerradura y verificar la clave
         List<Acceso> accesos = accesoRepository.findByCerradura(request.getCerradura());
         Acceso accesoValido = null;
 
@@ -63,18 +63,18 @@ public class AperturaController {
 
         Date ahora = new Date();
 
-        // Verificar que el acceso esté dentro del horario permitido
+        // Verificar si el acceso está dentro del horario
         if (ahora.before(accesoValido.getFechainicio()) || ahora.after(accesoValido.getFechafin())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acceso fuera del horario permitido");
         }
 
-        // Verificar que la clave de la cerradura también coincida con la introducida
+        // Verificar que la clave de la cerradura coincida también
         if (!tokenService.matches(request.getClave(), cerradura.getClave())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Clave incorrecta para esta cerradura");
         }
 
         try {
-            String deviceId = cerradura.getNombre();
+            String deviceId = cerradura.getDeviceId(); // <- NUEVO: usar campo específico
             String respuesta = seamService.abrirCerradura(deviceId).block();
 
             cerradura.setAbierto(true);

@@ -109,6 +109,7 @@ public class CerraduraController {
             cerradura.setNombre(newCerradura.getNombre());
             cerradura.setAbierto(newCerradura.getAbierto());
             cerradura.setClave(newCerradura.getClave());
+            cerradura.setDeviceId(newCerradura.getDeviceId());
             cerradura.setGestor(newCerradura.getGestor());
 
             // Solo codifica si la clave nueva no coincide con la ya codificada
@@ -135,6 +136,7 @@ public class CerraduraController {
             if (newCerradura.getNombre() != null) cerradura.setNombre(newCerradura.getNombre());
             if (newCerradura.getAbierto() != null) cerradura.setAbierto(newCerradura.getAbierto());
             if (newCerradura.getClave() != null) cerradura.setClave(newCerradura.getClave());
+            if (newCerradura.getDeviceId() != null) cerradura.setDeviceId(newCerradura.getDeviceId());
             cerraduraRepository.save(cerradura);
             return ResponseEntity.ok().body(cerradura);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

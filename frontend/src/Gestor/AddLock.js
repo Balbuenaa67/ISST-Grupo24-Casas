@@ -3,20 +3,20 @@ import { useAuth } from "../context/AuthContext";
 import './AddLock.css';
 
 const AddLock = () => {
-  // Estado para los datos del formulario
   const { user } = useAuth();
+
   const [formData, setFormData] = useState({
     direccion: '',
     nombre: '',
-    abierto: false, // Inicializado como booleano
+    abierto: false,
     clave: '',
-    gestor: { dni: user?.dni || ""  }
+    deviceId: '', 
+    gestor: { dni: user?.dni || "" }
   });
 
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Manejo de cambios en los inputs
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -35,9 +35,7 @@ const AddLock = () => {
     setSuccessMessage("");
 
     try {
-      const payload = {
-        ...formData
-      };
+      const payload = { ...formData };
 
       const response = await fetch("http://localhost:8080/api/cerraduras", {
         method: "POST",
@@ -50,8 +48,9 @@ const AddLock = () => {
         setFormData({
           direccion: '',
           nombre: '',
-          abierto: false, // Reiniciar a booleano
+          abierto: false,
           clave: '',
+          deviceId: '', 
           gestor: { dni: user?.dni || "" }
         });
       } else {
@@ -69,7 +68,6 @@ const AddLock = () => {
         <div className="add-access-content">
           <h2>Registrar Cerradura</h2>
 
-          {/* Muestra los mensajes de error o éxito */}
           {error && <p className="error-message">{error}</p>}
           {successMessage && <p className="success-message">{successMessage}</p>}
 
@@ -83,8 +81,8 @@ const AddLock = () => {
             <label>Clave</label>
             <input type="text" name="clave" value={formData.clave} onChange={handleChange} required />
 
-            {/* <label>DNI del Gestor</label>
-            <input type="text" name="gestor.dni" value={formData.gestor.dni} onChange={handleChange} required /> */}
+            <label>Device ID (Seam)</label>
+            <input type="text" name="deviceId" value={formData.deviceId} onChange={handleChange} required />
 
             <button type="submit" className="submit-button">Registrar Cerradura</button>
           </form>

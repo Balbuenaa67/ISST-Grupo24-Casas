@@ -67,6 +67,16 @@ const EditLock = () => {
           />
         </div>
         <div className="form-group">
+          <label htmlFor="deviceId">Device Id</label>
+          <input 
+            type="text" 
+            id="deviceId" 
+            value={lock.deviceId} 
+            onChange={(e) => setLock({ ...lock, deviceId: e.target.value })} 
+            required 
+          />
+        </div>
+        <div className="form-group">
           <label htmlFor="direccion">Dirección</label>
           <input 
             type="text" 

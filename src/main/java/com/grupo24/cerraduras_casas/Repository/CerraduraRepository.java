@@ -12,4 +12,5 @@ public interface CerraduraRepository extends CrudRepository<Cerradura, Long> {
     List<Cerradura> findByDireccion(String direccion);
     List<Cerradura> findByGestor(Gestor gestor);
     Optional<Cerradura> findByNombre(String nombre);
+    Optional<Cerradura> findByDeviceId(String deviceId);
 }

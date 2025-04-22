@@ -58,6 +58,7 @@ const Lock = () => {
             {filteredLocks.map((lock) => (
               <li key={lock.id} className="lock-item">
                 <p><strong>Nombre:</strong> {lock.nombre}</p>
+                <p><strong>Device Id:</strong> {lock.deviceId}</p>
                 <p><strong>Dirección:</strong> {lock.direccion}</p>
                 <p><strong>Estado:</strong> {lock.abierto ? "Abierta" : "Cerrada"}</p>
                 <button 

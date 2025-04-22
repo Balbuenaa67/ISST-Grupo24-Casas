@@ -5,7 +5,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
 import reactor.core.publisher.Mono;
 
 @Service
@@ -25,7 +24,7 @@ public class SeamService {
 
     public Mono<String> abrirCerradura(String deviceId) {
         return webClient.post()
-                .uri("/locks/lock-unlock")
+                .uri("/locks/unlock_door")
                 .header("Authorization", "Bearer " + apiKey)
                 .bodyValue("""
                     {
@@ -34,6 +33,7 @@ public class SeamService {
                     }
                 """.formatted(deviceId))
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .doOnNext(res -> System.out.println("Respuesta de Seam: " + res));
     }
 }
