@@ -25,7 +25,7 @@ public class SeamService {
 
     public Mono<String> abrirCerradura(String deviceId) {
         return webClient.post()
-                .uri("/locks/lock-unlock")
+                .uri("/locks/unlock_door")
                 .header("Authorization", "Bearer " + apiKey)
                 .bodyValue("""
                     {
