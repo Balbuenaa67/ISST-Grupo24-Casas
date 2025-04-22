@@ -60,10 +60,13 @@ const AddAccess = () => {
         }
     
         try {
+            const googleToken = localStorage.getItem('googleToken'); // 🟡 Captura del token de Google
+
             const payload = {
                 ...formData,
                 fechainicio: fechainicio.toISOString(),
-                fechafin: fechafinal.toISOString()
+                fechafin: fechafinal.toISOString(),
+                googleToken: googleToken // 🟢 Añadimos el token dentro del JSON que enviamos
             };
     
             const response = await fetch("http://localhost:8080/api/accesos", {

@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.10</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.grupo24</groupId>
 	<artifactId>cerraduras_casas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cerraduras_casas</name>
 	<description>Demo project for Spring Boot</description>
-	<url/>
+	<url />
 
 	<licenses>
-		<license/>
+		<license />
 	</licenses>
 
 	<developers>
-		<developer/>
+		<developer />
 	</developers>
 
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
 	</scm>
 
 	<properties>
@@ -38,6 +39,11 @@
 		<repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
+		</repository>
+		<repository>
+			<id>google-api-services</id>
+			<name>Google API Services</name>
+			<url>https://maven.google.com/</url>
 		</repository>
 	</repositories>
 
@@ -131,6 +137,7 @@
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
+		<!-- Google Calendar API -->
 
 	</dependencies>
 
