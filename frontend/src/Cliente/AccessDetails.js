@@ -29,13 +29,15 @@ const AccessDetails = () => {
   const abrirCerradura = async () => {
     if (!access) return;
 
+    console.log(access);
+    
     const requestData = {
       clave: access.clave,
-      cerradura: access.cerradura
+      cerradura: access.nombre
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/cerraduras/abrir', {
+      const response = await fetch('http://localhost:8080/api/apertura/abrir', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,6 +57,37 @@ const AccessDetails = () => {
     }
   };
 
+    const cerrarCerradura = async () => {
+      if (!access) return;
+  
+      console.log(access);
+      
+      const requestData = {
+        clave: access.clave,
+        cerradura: access.nombre
+      };
+  
+      try {
+        const response = await fetch('http://localhost:8080/api/apertura/cerrar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+        });
+  
+        const resultText = await response.text();
+  
+        if (response.ok) {
+          alert(`✅ ${resultText}`);
+        } else {
+          alert(`❌ ${resultText}`);
+        }
+      } catch (error) {
+        alert("❌ Error al conectar con el servidor");
+      }
+  };
+
   if (error) return <p className="error-message">{error}</p>;
   if (!access) return <p>Cargando detalles...</p>;
 
@@ -69,6 +102,9 @@ const AccessDetails = () => {
       <button className="open-button" onClick={abrirCerradura}>
         🔓 Abrir Cerradura
       </button>
+      <button className="close-button" onClick={cerrarCerradura}>
+        🔒 Cerrar Cerradura
+      </button>
       <button className="back-button" onClick={() => navigate(-1)}>
         ⬅ Volver
       </button>
@@ -77,5 +113,3 @@ const AccessDetails = () => {
 };
 
 export default AccessDetails;
-
-// seam_testUDJn_71JiuPCC6ipkn2oSgfb3Vrin

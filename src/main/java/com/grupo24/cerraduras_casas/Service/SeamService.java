@@ -36,4 +36,19 @@ public class SeamService {
                 .bodyToMono(String.class)
                 .doOnNext(res -> System.out.println("Respuesta de Seam: " + res));
     }
+    
+    public Mono<String> cerrarCerradura(String deviceId) {
+        return webClient.post()
+                .uri("/locks/lock_door")
+                .header("Authorization", "Bearer " + apiKey)
+                .bodyValue("""
+                    {
+                      "device_id": "%s",
+                      "action": "lock"
+                    }
+                """.formatted(deviceId))
+                .retrieve()
+                .bodyToMono(String.class)
+                .doOnNext(res -> System.out.println("Respuesta de Seam: " + res));
+    }
 }
