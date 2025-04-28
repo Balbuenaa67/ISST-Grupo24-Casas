@@ -4,7 +4,7 @@
 </p>
 
 # SmartAccess - ISST Grupo 24
-**SMartAccess** es una aplicación web que te permite gestionar el accesos a viviendas como cliente o como gestor para abrir y cerrar cerraduras inteligentes, también te permite programar tanto una salida como una entrada con Google Calendar
+**SmartAccess** es una aplicación web que te permite gestionar el accesos a viviendas como cliente o como gestor para abrir y cerrar cerraduras inteligentes, también te permite programar tanto una salida como una entrada con Google Calendar.
 
 ---
 
