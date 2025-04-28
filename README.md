@@ -8,13 +8,13 @@
 
 ---
 
-## Marca Personal
+## 🔒 Marca Personal
 
 La imagen de marca de SmartAccess quiere transmmitir paz y tranquilidad y un lugar paradisiaco, dando a entender la simplicidad y facilidad de uso que tiene la aplicación.
 
 ---
 
-## 🧰 Tecnologías previstas
+## 🛠️ Tecnologías previstas
 
 | Parte         | Tecnología                 |
 |---------------|----------------------------|
@@ -28,7 +28,7 @@ La imagen de marca de SmartAccess quiere transmmitir paz y tranquilidad y un lug
 
 ---
 
-##  MVP - Funcionalidad básica
+## ✨ Funcionalidades principales
 
 - 📌 Registro de cerraduras inteligentes.
 - 👥 Creación y gestión de accesos para usuarios (Clientes), validando claves y horarios.
