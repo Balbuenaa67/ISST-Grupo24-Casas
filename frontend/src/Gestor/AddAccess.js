@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from "../context/AuthContext";
 import './AddAccess.css';
+import GoogleLoginButton from "../SignUp/GoogleLoginButton";
 
 const AddAccess = () => {
     // Estado para los datos del formulario
@@ -11,17 +12,17 @@ const AddAccess = () => {
         fechafinal: '',
         direccion: '',
         cerradura: '',
-        gestor: { dni: user?.dni || ""  },
+        gestor: { dni: user?.dni || "" },
         cliente: { dni: '' }
     });
-    
+
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState("");
-    
+
     // Manejo de cambios en los inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         if (name === "gestor.dni") {
             setFormData({ ...formData, gestor: { ...formData.gestor, dni: value } });
         } else if (name === "cliente.dni") {
@@ -58,7 +59,7 @@ const AddAccess = () => {
             setError("La fecha final debe ser mayor que la fecha de inicio.");
             return;
         }
-    
+
         try {
             const googleToken = localStorage.getItem('googleToken'); // 🟡 Captura del token de Google
 
@@ -68,13 +69,13 @@ const AddAccess = () => {
                 fechafin: fechafinal.toISOString(),
                 googleToken: googleToken // 🟢 Añadimos el token dentro del JSON que enviamos
             };
-    
+
             const response = await fetch("http://localhost:8080/api/accesos", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
             });
-    
+
             if (response.ok) {
                 setSuccessMessage("Acceso añadido.");
                 setFormData({
@@ -83,16 +84,70 @@ const AddAccess = () => {
                     fechafinal: "",
                     direccion: "",
                     cerradura: "",
-                    gestor: { dni: user?.dni || ""  },
+                    gestor: { dni: user?.dni || "" },
                     cliente: { dni: "" }
                 });
             } else {
                 setError("Error en el registro del acceso.");
             }
-    
+
         } catch (error) {
             console.error('Error al registrar el acceso:', error);
             alert('Hubo un error al registrar el acceso');
+        }
+    };
+
+    // Función que creará un evento en el Google Calendar del usuario
+    const createCalendarEvent = async () => {
+
+        // 1️⃣ Obtener el access_token guardado en el navegador (localStorage) después del login con Google
+        const token = localStorage.getItem('googleToken');
+
+        // 2️⃣ Verificar que tenemos el token disponible
+        if (!token) {
+            console.error("No se encontró el token de Google en el navegador");
+            alert("❌ Primero inicia sesión con Google para poder crear eventos.");
+            return;
+        }
+
+        try {
+            // 3️⃣ Realizar una solicitud POST a la API de Google Calendar
+            const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+                method: 'POST', // método HTTP POST para crear
+                headers: {
+                    'Authorization': `Bearer ${token}`, // usamos el token de autenticación
+                    'Content-Type': 'application/json', // el cuerpo va en JSON
+                },
+                body: JSON.stringify({
+                    // 4️⃣ Definir el contenido del evento que vamos a crear
+                    summary: `🔑 Acceso: ${formData.direccion}`,
+                    description: `Cerradura: ${formData.cerradura}\nDNI Cliente: ${formData.cliente.dni}`,
+                    start: {
+                        dateTime: new Date(formData.fechainicio).toISOString(), // fecha/hora inicio
+                        timeZone: 'Europe/Madrid',       // zona horaria
+                    },
+                    end: {
+                        dateTime: new Date(formData.fechafinal).toISOString(),  // fecha/hora fin
+                        timeZone: 'Europe/Madrid',
+                    },
+                }),
+            });
+
+            // 5️⃣ Convertimos la respuesta a JSON para ver qué nos devuelve Google
+            const data = await response.json();
+
+            if (response.status === 200 || response.status === 201) {
+                console.log("✅ Evento creado:", data);
+                alert('✅ Evento creado correctamente en tu Google Calendar');
+            } else {
+                console.error('❌ Error creando evento:', data);
+                alert(`❌ Error al crear el evento: ${data.error?.message || 'Error desconocido'}`);
+            }
+
+        } catch (error) {
+            // 6️⃣ Captura de errores de red o de la API
+            console.error('❌ Error conectando a Google Calendar:', error);
+            alert('❌ Error al comunicar con Google Calendar.');
         }
     };
 
@@ -101,6 +156,7 @@ const AddAccess = () => {
             <div className="background-overlay">
                 <div className="add-access-content">
                     <h2>Registrar Acceso</h2>
+                    <GoogleLoginButton />
 
                     {/* Muestra los mensajes de error o éxito */}
                     {error && <p className="error-message">{error}</p>}
@@ -110,7 +166,7 @@ const AddAccess = () => {
                     <form onSubmit={handleSubmit}>
                         <label>Clave</label>
                         <input type="text" name="clave" value={formData.clave} onChange={handleChange} required />
-                        
+
                         <label>Fecha Inicio:</label>
                         <input type="datetime-local" name="fechainicio" value={formData.fechainicio} onChange={handleChange} required />
 
@@ -119,13 +175,17 @@ const AddAccess = () => {
 
                         <label>Dirección</label>
                         <input type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
-                        
+
                         <label>ID Cerradura</label>
                         <input type="text" name="cerradura" value={formData.cerradura} onChange={handleChange} required />
-                        
+
                         <label>DNI del Cliente</label>
                         <input type="text" name="cliente.dni" value={formData.cliente.dni} onChange={handleChange} required />
-                        
+
+                        <button onClick={createCalendarEvent} className="submit-button">
+                            📅 Registrar acceso en Google Calendar
+                        </button>
+                        <br />
                         <button type="submit" className="submit-button">Registrar Acceso</button>
                     </form>
                 </div>
