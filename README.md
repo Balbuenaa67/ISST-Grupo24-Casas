@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="imagenes/logo.png" alt="Logo SmartAccess" width="300"/>
+  <img src="frontend/src/fondos/logo.png" alt="Logo SmartAccess" width="300"/>
 </p>
 
 # SmartAccess - ISST Grupo 24
