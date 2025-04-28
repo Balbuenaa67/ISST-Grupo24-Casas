@@ -32,10 +32,10 @@ La imagen de marca de SmartAccess quiere transmmitir paz y tranquilidad y un lug
 
 - 📌 Registro de cerraduras inteligentes.
 - 👥 Creación y gestión de accesos para usuarios (Clientes), validando claves y horarios.
--🔓 Apertura y cierre remoto de cerraduras, validando identidad y permisos.
--🗓️ Programación automática de aperturas/cierres basada en eventos de Google Calendar.
--🛡️ Control de roles: Gestores administran cerraduras y accesos asociados.
--📈 Visualización en tiempo real del estado de cada cerradura.
+- 🔓 Apertura y cierre remoto de cerraduras, validando identidad y permisos.
+- 🗓️ Programación automática de aperturas/cierres basada en eventos de Google Calendar.
+- 🛡️ Control de roles: Gestores administran cerraduras y accesos asociados.
+- 📈 Visualización en tiempo real del estado de cada cerradura.
 
 
 ## 👥 Equipo
