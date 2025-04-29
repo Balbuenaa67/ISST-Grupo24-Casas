@@ -2,10 +2,10 @@ package com.grupo24.cerraduras_casas.Controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,16 +30,23 @@ import com.grupo24.cerraduras_casas.Repository.AccesoRepository;
 import com.grupo24.cerraduras_casas.Repository.ClienteRepository;
 import com.grupo24.cerraduras_casas.Repository.GestorRepository;
 import com.grupo24.cerraduras_casas.Service.TokenService;
-
 import com.grupo24.cerraduras_casas.payload.request.AccesoRequest;
+import com.grupo24.cerraduras_casas.Service.GoogleCalendarService;
+
+// import com.grupo24.cerraduras_casas.payload.request.AccesoRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/accesos")
 public class AccesoController {
 
+    @Autowired
     private final AccesoRepository accesoRepository;
+
+    @Autowired
     private final GestorRepository gestorRepository;
+
+    @Autowired
     private final ClienteRepository clienteRepository;
 
     @Autowired
@@ -47,7 +54,6 @@ public class AccesoController {
 
     public static final Logger log = LoggerFactory.getLogger(AccesoController.class);
 
-    @Autowired
     public AccesoController(AccesoRepository accesoRepository, GestorRepository gestorRepository,
             ClienteRepository clienteRepository, TokenService tokenService) {
         this.accesoRepository = accesoRepository;
@@ -56,8 +62,8 @@ public class AccesoController {
         this.tokenService = tokenService;
     }
 
-    // @Autowired
-    // private GoogleCalendarService googleCalendarService;
+    @Autowired
+    private GoogleCalendarService googleCalendarService;
 
     @GetMapping
     public List<Acceso> readAll() {
@@ -95,59 +101,73 @@ public class AccesoController {
         return ResponseEntity.created(new URI("/accesos/" + result.getId())).body(result);
     }
 
-    // @PostMapping("/register-access")
-    // public ResponseEntity<?> registerAccess(@RequestBody AccesoRequest accesoRequest) {
-    //     try {
-    //         log.info("Intentando registrar acceso con Google Calendar...");
+    @PostMapping("/register-access")
+    public ResponseEntity<?> registerAccess(@RequestBody AccesoRequest accesoRequest) {
+        try {
+            log.info("Intentando registrar acceso con Google Calendar...");
 
-    //         // 1️⃣ Validaciones básicas (puedes ampliarlas si quieres)
-    //         if (accesoRequest.getClave() == null || accesoRequest.getClave().isEmpty() ||
-    //                 accesoRequest.getDireccion() == null || accesoRequest.getDireccion().isEmpty() ||
-    //                 accesoRequest.getCerradura() == null || accesoRequest.getCerradura().isEmpty() ||
-    //                 accesoRequest.getGestor() == null || accesoRequest.getGestor().getDni() == null ||
-    //                 accesoRequest.getCliente() == null || accesoRequest.getCliente().getDni() == null) {
-    //             return new ResponseEntity<>("Campos obligatorios vacíos.", HttpStatus.BAD_REQUEST);
-    //         }
+            // Validaciones básicas
+            if (accesoRequest.getClave() == null || accesoRequest.getClave().isEmpty() ||
+                    accesoRequest.getDireccion() == null || accesoRequest.getDireccion().isEmpty() ||
+                    accesoRequest.getCerradura() == null || accesoRequest.getCerradura().isEmpty() ||
+                    accesoRequest.getGestor() == null || accesoRequest.getGestor().getDni() == null ||
+                    accesoRequest.getCliente() == null || accesoRequest.getCliente().getDni() == null) {
+                return new ResponseEntity<>("Campos obligatorios vacíos.", HttpStatus.BAD_REQUEST);
+            }
 
-    //         // 2️⃣ Buscar gestor y cliente en la BBDD
-    //         Optional<Gestor> gestor = gestorRepository.findById(accesoRequest.getGestor().getDni());
-    //         Optional<Cliente> cliente = clienteRepository.findById(accesoRequest.getCliente().getDni());
+            // Buscar gestor y cliente
+            Optional<Gestor> gestor = gestorRepository.findById(accesoRequest.getGestor().getDni());
+            Optional<Cliente> cliente = clienteRepository.findById(accesoRequest.getCliente().getDni());
 
-    //         if (gestor.isEmpty() || cliente.isEmpty()) {
-    //             log.error("Gestor o Cliente no encontrados en la base de datos.");
-    //             return new ResponseEntity<>("Gestor o Cliente no encontrados.", HttpStatus.NOT_FOUND);
-    //         }
+            if (gestor.isEmpty() || cliente.isEmpty()) {
+                log.error("Gestor o Cliente no encontrados en la base de datos.");
+                return new ResponseEntity<>("Gestor o Cliente no encontrados.", HttpStatus.NOT_FOUND);
+            }
 
-    //         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            // Crear objeto Acceso
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            java.util.Date fechaInicioUtil = formatter.parse(accesoRequest.getFechainicio());
+            java.util.Date fechaFinUtil = formatter.parse(accesoRequest.getFechafin());
 
-    //         Date fechaInicio = formatter.parse(accesoRequest.getFechainicio());
-    //         Date fechaFin = formatter.parse(accesoRequest.getFechafin());
+            // 🔵 Convertimos a java.sql.Date aquí
+            java.sql.Date fechaInicio = new java.sql.Date(fechaInicioUtil.getTime());
+            java.sql.Date fechaFin = new java.sql.Date(fechaFinUtil.getTime());
 
-    //         // 3️⃣ Crear manualmente el objeto Acceso a partir de AccesoRequest
-    //         Acceso nuevoAcceso = new Acceso();
-    //         nuevoAcceso.setClave(tokenService.generateToken(accesoRequest.getClave())); // genera clave encriptada
-    //         nuevoAcceso.setDireccion(accesoRequest.getDireccion());
-    //         nuevoAcceso.setCerradura(accesoRequest.getCerradura());
-    //         nuevoAcceso.setFechainicio(fechaInicio);
-    //         nuevoAcceso.setFechafin(fechaFin);
-    //         nuevoAcceso.setGestor(gestor.get());
-    //         nuevoAcceso.setCliente(cliente.get());
+            Acceso nuevoAcceso = new Acceso();
+            nuevoAcceso.setClave(tokenService.generateToken(accesoRequest.getClave()));
+            nuevoAcceso.setDireccion(accesoRequest.getDireccion());
+            nuevoAcceso.setCerradura(accesoRequest.getCerradura());
+            nuevoAcceso.setFechainicio(fechaInicio);
+            nuevoAcceso.setFechafin(fechaFin);
+            nuevoAcceso.setGestor(gestor.get());
+            nuevoAcceso.setCliente(cliente.get());
 
-    //         // 4️⃣ Guardar acceso en base de datos
-    //         Acceso accesoGuardado = accesoRepository.save(nuevoAcceso);
-    //         log.info("Acceso guardado: {}", accesoGuardado);
+            // Guardar en la BBDD
+            Acceso accesoGuardado = accesoRepository.save(nuevoAcceso);
+            log.info("✅ Acceso guardado en BBDD: {}", accesoGuardado);
 
-    //         // 5️⃣ (En el siguiente paso) Llamaremos aquí a GoogleCalendarService usando
-    //         // accesoRequest.getGoogleToken()
+            // Crear evento en Google Calendar
+            if (accesoRequest.getGoogleToken() != null && !accesoRequest.getGoogleToken().isEmpty()) {
+                System.out.println("✅ Vamos a crear el evento en Google Calendar ahora...");
+                googleCalendarService.createCalendarEvent(
+                        accesoRequest.getGoogleToken(), // Token Google
+                        "🔑 Acceso a alojamiento: " + accesoGuardado.getDireccion(), // Título del evento
+                        fechaInicio, // Fecha de inicio
+                        fechaFin // Fecha de fin
+                );
+                log.info("✅ Evento creado en Google Calendar.");
+            } else {
+                log.warn("⚠️ No se ha proporcionado Google Token, no se crea evento en Calendar.");
+            }
 
-    //         return ResponseEntity.ok("Acceso registrado correctamente en BBDD.");
+            return ResponseEntity.ok("Acceso registrado correctamente en BBDD y evento creado en Calendar.");
 
-    //     } catch (Exception e) {
-    //         log.error("Error registrando acceso: {}", e.getMessage());
-    //         return new ResponseEntity<>("❌ Error registrando acceso: " + e.getMessage(),
-    //                 HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-    // }
+        } catch (Exception e) {
+            log.error("❌ Error registrando acceso: {}", e.getMessage());
+            return new ResponseEntity<>("Error registrando acceso: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Acceso> readOne(@PathVariable Long id) {
