@@ -14,7 +14,7 @@ La imagen de marca de SmartAccess quiere transmmitir paz y tranquilidad y un lug
 
 ---
 
-## 🛠️ Tecnologías previstas
+## 🛠️ Tecnologías usadas
 
 | Parte         | Tecnología                 |
 |---------------|----------------------------|
@@ -37,6 +37,7 @@ La imagen de marca de SmartAccess quiere transmmitir paz y tranquilidad y un lug
 - 🛡️ Control de roles: Gestores administran cerraduras y accesos asociados.
 - 📈 Visualización en tiempo real del estado de cada cerradura.
 
+---
 
 ## 👥 Equipo
 
