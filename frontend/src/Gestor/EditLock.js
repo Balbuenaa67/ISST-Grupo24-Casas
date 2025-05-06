@@ -109,6 +109,9 @@ const EditLock = () => {
           </select>
         </div>
         <button type="submit">Guardar cambios</button>
+            <button className="back-button" onClick={() => navigate(-1)}>
+              ⬅ Volver
+            </button>
       </form>
     </div>
     </>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import './AddAccess.css';
 import GoogleLoginButton from "../SignUp/GoogleLoginButton";
 
 const AddAccess = () => {
     // Estado para los datos del formulario
     const { user } = useAuth();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         clave: '',
         fechainicio: '',
@@ -188,7 +190,10 @@ const AddAccess = () => {
                         {/* <br />
                         <button type="submit" className="submit-button">Registrar Acceso</button> */}
                     </form>
-                </div>
+                    <button className="back-button" onClick={() => navigate(-1)}>
+                        ⬅ Volver
+                    </button>
+                                </div>
             </div>
         </div>
     );

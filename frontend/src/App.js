@@ -16,6 +16,7 @@ import AddLock from './Gestor/AddLock';
 import Lock from './Gestor/Lock';
 import EditLock from './Gestor/EditLock';
 import Client from './Gestor/Client';
+import EventAccess from './Gestor/EventAccess';
 
 import HomeUser from './Cliente/HomeUser';
 import ClientAccess from './Cliente/ClientAccess';
@@ -55,6 +56,7 @@ function App() {
             <Route path="/ManagementPanel/Lock" element={<Lock />} />
             <Route path="/ManagementPanel/EditLock/:id" element={<EditLock />} />
             <Route path="/ManagementPanel/Clients" element={<Client />} />
+            <Route path="/ManagementPanel/EventAccess" element={<EventAccess />} />
             </Route>
 
           {/* Rutas para clientes */}

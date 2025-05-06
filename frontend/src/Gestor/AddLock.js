@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import './AddLock.css';
 
 const AddLock = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     direccion: '',
@@ -86,6 +88,9 @@ const AddLock = () => {
 
             <button type="submit" className="submit-button">Registrar Cerradura</button>
           </form>
+            <button className="back-button" onClick={() => navigate(-1)}>
+              ⬅ Volver
+            </button>
         </div>
       </div>
     </div>

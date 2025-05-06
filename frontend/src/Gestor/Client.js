@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import './Client.css';
 
 const Client = () => {
   const [clients, setClients] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -47,6 +49,9 @@ const Client = () => {
               <p><strong>Dirección:</strong> {client.direccion}</p>
             </li>
           ))}
+          <button className="back-button" onClick={() => navigate(-1)}>
+            ⬅ Volver
+          </button>
         </ul>
       )}
     </div>

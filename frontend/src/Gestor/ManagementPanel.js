@@ -43,7 +43,7 @@ const ManagementPanel = () => {
               </a>
             </li> */}
             <li>
-              <a href="/historial-accesos">
+              <a href="/ManagementPanel/EventAccess">
                 📜 Historial de accesos
               </a>
             </li>

@@ -75,6 +75,9 @@ const Lock = () => {
                 </button>
               </li>
             ))}
+            <button className="back-button" onClick={() => navigate(-1)}>
+              ⬅ Volver
+            </button>
           </ul>
         </div>
       </div>

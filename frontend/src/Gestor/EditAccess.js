@@ -70,6 +70,9 @@ const EditAccess = () => {
         <input type="text" name="clave" value={access.clave} onChange={handleChange} required />
 
         <button type="submit" className="submit-button">Guardar Cambios</button>
+            <button className="back-button" onClick={() => navigate(-1)}>
+              ⬅ Volver
+            </button>
       </form>
     </div>
     </>

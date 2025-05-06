@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import './AccessDetails.css';
 
+
 const AccessDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const AccessDetails = () => {
   useEffect(() => {
     const fetchAccessDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/cerraduras/${id}`);
+        const response = await fetch(`http://localhost:8080/api/accesos/${id}`);
         if (response.ok) {
           const data = await response.json();
           setAccess(data);
@@ -33,7 +34,7 @@ const AccessDetails = () => {
     
     const requestData = {
       clave: access.clave,
-      cerradura: access.nombre
+      cerradura: access.cerradura
     };
 
     try {
@@ -49,8 +50,10 @@ const AccessDetails = () => {
 
       if (response.ok) {
         alert(`✅ ${resultText}`);
+        await registrarEvento("apertura", true, access.cliente.dni, access.cerradura); // si funciona
       } else {
         alert(`❌ ${resultText}`);
+        await registrarEvento("apertura", false, access.cliente.dni, access.cerradura); // si falla
       }
     } catch (error) {
       alert("❌ Error al conectar con el servidor");
@@ -64,7 +67,7 @@ const AccessDetails = () => {
       
       const requestData = {
         clave: access.clave,
-        cerradura: access.nombre
+        cerradura: access.cerradura
       };
   
       try {
@@ -80,13 +83,44 @@ const AccessDetails = () => {
   
         if (response.ok) {
           alert(`✅ ${resultText}`);
+          await registrarEvento("cierre", true, access.cliente.dni, access.cerradura); // si funciona
         } else {
           alert(`❌ ${resultText}`);
+          await registrarEvento("cierre", false, access.cliente.dni, access.cerradura); // si falla
         }
       } catch (error) {
         alert("❌ Error al conectar con el servidor");
       }
   };
+
+  const registrarEvento = async (accion, exito, dni, idCerradura) => {
+    try {
+      const payload = {
+        dniCliente: dni,
+        idCerradura: idCerradura,
+        accion: accion,
+        exito: exito
+      };
+  
+      const response = await fetch("http://localhost:8080/api/eventos/registrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      console.log("📦 Enviando evento de acceso:", payload);
+  
+      if (!response.ok) {
+        console.error("❌ Error registrando evento de acceso");
+      }
+  
+    } catch (error) {
+      console.error("❌ Error en la solicitud de registrarEvento:", error);
+    }
+  };
+  
 
   if (error) return <p className="error-message">{error}</p>;
   if (!access) return <p>Cargando detalles...</p>;
