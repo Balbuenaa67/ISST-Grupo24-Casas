@@ -24,7 +24,7 @@ const ManagementPanel = () => {
             </li>
             <li>
               <a href="/ManagementPanel/AddAccess">
-                🔑 Registrar un acceso
+                🔑 Registrar un acceso en Google Calendar
               </a>
             </li>
             <li>
@@ -37,11 +37,11 @@ const ManagementPanel = () => {
                 👥 Clientes
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="/google-calendar">
                 📅 Google Calendar
               </a>
-            </li>
+            </li> */}
             <li>
               <a href="/historial-accesos">
                 📜 Historial de accesos

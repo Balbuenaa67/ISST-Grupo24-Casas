@@ -185,8 +185,8 @@ const AddAccess = () => {
                         <button onClick={createCalendarEvent} className="submit-button">
                             📅 Registrar acceso en Google Calendar
                         </button>
-                        <br />
-                        <button type="submit" className="submit-button">Registrar Acceso</button>
+                        {/* <br />
+                        <button type="submit" className="submit-button">Registrar Acceso</button> */}
                     </form>
                 </div>
             </div>
