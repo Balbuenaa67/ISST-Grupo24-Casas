@@ -6,7 +6,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="home-container">
+    <div className="message-container">
       <div className="message-container">
         <h2>Bienvenido a SmartAccess</h2>
         <p>¡Disfruta de tus vacaciones con un solo click!</p>

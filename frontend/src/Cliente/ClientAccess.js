@@ -8,6 +8,8 @@ const Access = () => {
   const navigate = useNavigate();
   const [accessData, setAccessData] = useState([]);
   const [error, setError] = useState(null);
+  const [mensaje, setMensaje] = useState("");
+
 
   useEffect(() => {
     const fetchAccess = async () => {

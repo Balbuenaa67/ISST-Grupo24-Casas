@@ -8,6 +8,8 @@ const AccessDetails = () => {
   const navigate = useNavigate();
   const [access, setAccess] = useState(null);
   const [error, setError] = useState(null);
+  const [mensaje, setMensaje] = useState("");
+
 
   useEffect(() => {
     const fetchAccessDetails = async () => {
@@ -49,11 +51,13 @@ const AccessDetails = () => {
       const resultText = await response.text();
 
       if (response.ok) {
+        setMensaje(`✅ ${resultText}`);
         alert(`✅ ${resultText}`);
-        await registrarEvento("apertura", true, access.cliente.dni, access.cerradura); // si funciona
+        await registrarEvento("cierre", true, access.cliente.dni, access.cerradura); // si funciona
       } else {
+        setMensaje(`❌ ${resultText}`);
         alert(`❌ ${resultText}`);
-        await registrarEvento("apertura", false, access.cliente.dni, access.cerradura); // si falla
+        await registrarEvento("cierre", false, access.cliente.dni, access.cerradura); // si falla
       }
     } catch (error) {
       alert("❌ Error al conectar con el servidor");
@@ -82,9 +86,11 @@ const AccessDetails = () => {
         const resultText = await response.text();
   
         if (response.ok) {
+          setMensaje(`✅ ${resultText}`);
           alert(`✅ ${resultText}`);
           await registrarEvento("cierre", true, access.cliente.dni, access.cerradura); // si funciona
         } else {
+          setMensaje(`❌ ${resultText}`);
           alert(`❌ ${resultText}`);
           await registrarEvento("cierre", false, access.cliente.dni, access.cerradura); // si falla
         }
@@ -139,6 +145,7 @@ const AccessDetails = () => {
       <button className="close-button" onClick={cerrarCerradura}>
         🔒 Cerrar Cerradura
       </button>
+      {mensaje && <p className="resultado-operacion">{mensaje}</p>}
       <button className="back-button" onClick={() => navigate(-1)}>
         ⬅ Volver
       </button>
